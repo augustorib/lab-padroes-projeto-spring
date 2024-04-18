@@ -1,5 +1,6 @@
 package one.digitalinnovation.gof.controller;
 
+import one.digitalinnovation.gof.model.Pokemon;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;

@@ -16,6 +16,9 @@ public class Cliente {
 	@ManyToOne
 	private Endereco endereco;
 
+	@ManyToOne
+	private Pokemon pokemon;
+
 	public Long getId() {
 		return id;
 	}
@@ -39,5 +42,15 @@ public class Cliente {
 	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
 	}
+
+	public Pokemon getPokemon() {
+		return pokemon;
+	}
+
+	public void setPokemon(Pokemon pokemon) {
+		this.pokemon = pokemon;
+	}
+
+
 
 }

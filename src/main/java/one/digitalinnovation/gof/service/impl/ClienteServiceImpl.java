@@ -2,13 +2,12 @@ package one.digitalinnovation.gof.service.impl;
 
 import java.util.Optional;
 
+
+import one.digitalinnovation.gof.model.*;
+import one.digitalinnovation.gof.service.PokemonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import one.digitalinnovation.gof.model.Cliente;
-import one.digitalinnovation.gof.model.ClienteRepository;
-import one.digitalinnovation.gof.model.Endereco;
-import one.digitalinnovation.gof.model.EnderecoRepository;
 import one.digitalinnovation.gof.service.ClienteService;
 import one.digitalinnovation.gof.service.ViaCepService;
 
@@ -27,9 +26,16 @@ public class ClienteServiceImpl implements ClienteService {
 	private ClienteRepository clienteRepository;
 	@Autowired
 	private EnderecoRepository enderecoRepository;
+
+	@Autowired
+	private PokemonRepository pokemonRepository;
+
 	@Autowired
 	private ViaCepService viaCepService;
-	
+
+    @Autowired
+	private PokemonService pokemonService;
+
 	// Strategy: Implementar os métodos definidos na interface.
 	// Facade: Abstrair integrações com subsistemas, provendo uma interface simples.
 
@@ -75,9 +81,20 @@ public class ClienteServiceImpl implements ClienteService {
 			enderecoRepository.save(novoEndereco);
 			return novoEndereco;
 		});
+
+		String name  = cliente.getPokemon().getName();
+
+		Pokemon pokemon = pokemonRepository.findByName(name);
+
+		if(pokemon == null){
+			pokemon = pokemonService.getPokemonAPI(name);
+			pokemonRepository.save(pokemon);
+		}
+
 		cliente.setEndereco(endereco);
-		// Inserir Cliente, vinculando o Endereco (novo ou existente).
+		cliente.setPokemon(pokemon);
+
 		clienteRepository.save(cliente);
 	}
-
 }
+
